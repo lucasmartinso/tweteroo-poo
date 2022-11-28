@@ -1,14 +1,15 @@
+import { userService } from "../service/userService.js";
+
 function signup(req,res) {
+    
     const { username, avatar } = req.body;
 
-    // if (!username || !avatar) {
-    //     res.status(400).send('Todos os campos são obrigatórios!');
-    //     return;
-    // }
+    const error = userService.signup(username,avatar);
 
-    // usuarios.push({ username, avatar });
+    if(error) return res.status(400).send('Todos os campos são obrigatórios!');
 
-    res.status(200).send('OK deu tudo certo');    
+    res.status(200).send('OK deu tudo certo');
+        
 }
 
 export const userController = { 
