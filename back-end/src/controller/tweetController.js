@@ -1,50 +1,29 @@
-//import { userService } from "../service/tweetService.js";
-
-const usuarios = [];
-const tweets = [];
+import { tweetService } from "../service/tweetService.js";
 
 function postTweet(req,res) {
     const { tweet, username } = req.body;
 
-    if (!username || !tweet) {
-      return res.status(400).send('Todos os campos são obrigatórios!');
-    }
-  
-    const { avatar } = usuarios.find(user => user.username === username);
-  
-    tweets.push({ username, tweet, avatar });
+    const error = tweetService.postTweet(tweet,username);
+
+    if(error) return res.status(400).send('Todos os campos são obrigatórios!');
   
     res.status(201).send('OK, seu tweet foi criado');
 }
 
 function userTweets(req,res) { 
-    const { username } = req.params;
-
-    const tweetsDoUsuario = tweets.filter(t => t.username === username);
+    const tweetsDoUsuario = tweetService.userTweets();
 
     res.status(200).send(tweetsDoUsuario);
-}
-
-function reverseTweets() {
-    return [...tweets].reverse();
 }
 
 function allTweets(req,res) { 
     const { page } = req.query;
 
-    if (page && page < 1) {
-        res.status(400).send('Informe uma página válida!');
-        return;
-    }
-    const limite = 10;
-    const start = (page - 1) * limite;
-    const end = page * limite;
+    const tweets = tweetService.allTweets(page);
 
-    if (tweets.length <= 10) {
-        return res.send(reverseTweets());
-    }
+    if(tweets === 'error') return res.status(400).send('Informe uma página válida!');
 
-    res.status(200).send([...tweets].reverse().slice(start, end));
+    res.status(200).send(tweets);
 }
 
 export const tweetController = { 

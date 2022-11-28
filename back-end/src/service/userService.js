@@ -1,5 +1,6 @@
+import { usuarios } from "./variables.js"
+
 function signup(username,avatar) {
-    const usuarios = [];
      
     if (!username || !avatar) {
         return 'error';
