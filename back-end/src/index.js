@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import cors from 'cors';
 import express, { json } from 'express';
+import routers from './routers/routers.js'
 
 const app = express();
 
@@ -10,62 +11,64 @@ app.use(json());
 const usuarios = [];
 const tweets = [];
 
-app.post('/sign-up', (req, res) => {
-  const { username, avatar } = req.body;
+app.use(routers);
 
-  if (!username || !avatar) {
-    res.status(400).send('Todos os campos são obrigatórios!');
-    return;
-  }
+// app.post('/sign-up', (req, res) => {
+//   const { username, avatar } = req.body;
 
-  usuarios.push({ username, avatar });
+//   if (!username || !avatar) {
+//     res.status(400).send('Todos os campos são obrigatórios!');
+//     return;
+//   }
 
-  res.status(200).send('OK deu tudo certo');
-});
+//   usuarios.push({ username, avatar });
 
-app.post('/tweets', (req, res) => {
-  const { tweet, username } = req.body;
+//   res.status(200).send('OK deu tudo certo');
+// });
 
-  if (!username || !tweet) {
-    return res.status(400).send('Todos os campos são obrigatórios!');
-  }
+// app.post('/tweets', (req, res) => {
+//   const { tweet, username } = req.body;
 
-  const { avatar } = usuarios.find(user => user.username === username);
+//   if (!username || !tweet) {
+//     return res.status(400).send('Todos os campos são obrigatórios!');
+//   }
 
-  tweets.push({ username, tweet, avatar });
+//   const { avatar } = usuarios.find(user => user.username === username);
 
-  res.status(201).send('OK, seu tweet foi criado');
-});
+//   tweets.push({ username, tweet, avatar });
 
-app.get('/tweets/:username', (req, res) => {
-  const { username } = req.params;
+//   res.status(201).send('OK, seu tweet foi criado');
+// });
 
-  const tweetsDoUsuario = tweets.filter(t => t.username === username);
+// app.get('/tweets/:username', (req, res) => {
+//   const { username } = req.params;
 
-  res.status(200).send(tweetsDoUsuario);
-});
+//   const tweetsDoUsuario = tweets.filter(t => t.username === username);
 
-app.get('/tweets', (req, res) => {
-  const { page } = req.query;
+//   res.status(200).send(tweetsDoUsuario);
+// });
 
-  if (page && page < 1) {
-    res.status(400).send('Informe uma página válida!');
-    return;
-  }
-  const limite = 10;
-  const start = (page - 1) * limite;
-  const end = page * limite;
+// app.get('/tweets', (req, res) => {
+//   const { page } = req.query;
 
-  if (tweets.length <= 10) {
-    return res.send(reverseTweets());
-  }
+//   if (page && page < 1) {
+//     res.status(400).send('Informe uma página válida!');
+//     return;
+//   }
+//   const limite = 10;
+//   const start = (page - 1) * limite;
+//   const end = page * limite;
 
-  res.status(200).send([...tweets].reverse().slice(start, end));
-});
+//   if (tweets.length <= 10) {
+//     return res.send(reverseTweets());
+//   }
 
-function reverseTweets() {
-  return [...tweets].reverse();
-}
+//   res.status(200).send([...tweets].reverse().slice(start, end));
+// });
+
+// function reverseTweets() {
+//   return [...tweets].reverse();
+// }
 
 app.listen(5001, () => {
   console.log(chalk.bold.blue('Servidor funfando de boas!!!'));
