@@ -1,7 +1,6 @@
 import { userService } from "../service/userService.js";
 
 function signup(req,res) {
-    
     const { username, avatar } = req.body;
 
     const error = userService.signup(username,avatar);
