@@ -6,6 +6,7 @@ function signup(username,avatar) {
     }
 
     usuarios.push({ username, avatar });
+    console.log(usuarios);
 }
 
 export const userService = { 
