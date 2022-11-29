@@ -13,7 +13,6 @@ class AuthControlller {
         }
     
         this.usuarios.push({ username, avatar });
-        console.log(this.usuarios);
 
         return res.status(200).send('OK deu tudo certo');
     }
