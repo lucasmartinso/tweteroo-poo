@@ -3,13 +3,26 @@ import cors from 'cors';
 import express, { json } from 'express';
 import routers from './routers/routers.js'
 
-const app = express();
+class Server { 
+  constructor(port, app) { 
+    this.port = port; 
+    this.app = app;
+  }
 
-app.use(cors());
-app.use(json());
+  configRouter() { 
+    this.app.use(cors());
+    this.app.use(json());
+    this.app.use(routers);
+  }
 
-app.use(routers);
+  listen() { 
+    this.app.listen(this.port, () => {
+      console.log(chalk.bold.blue(`Server listen on port ${this.port}!!!`));
+    });
+  }
+}
 
-app.listen(5001, () => {
-  console.log(chalk.bold.blue('Servidor funfando de boas!!!'));
-});
+const server = new Server(5001, express());
+
+server.configRouter();
+server.listen();

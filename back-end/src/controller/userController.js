@@ -1,16 +1,22 @@
-import { userService } from "../service/userService.js";
+class AuthControlller { 
+    constructor(username,avatar) { 
+        this.usuarios = [];
+        this.signup = this.signup.bind(this);
+    }
 
-function signup(req,res) {
-    const { username, avatar } = req.body;
+    signup(req,res) {
+        const { username, avatar } = req.body;
+    
+        if (!username || !avatar) {
+            res.status(400).send('Todos os campos são obrigatórios!');
+            return;
+        }
+    
+        usuarios.push({ username, avatar });
 
-    const error = userService.signup(username,avatar);
-
-    if(error) return res.status(400).send('Todos os campos são obrigatórios!');
-
-    res.status(200).send('OK deu tudo certo');
-        
+        return res.status(200).send('OK deu tudo certo');
+    }
 }
 
-export const userController = { 
-    signup
-}
+
+export default new AuthControlller();

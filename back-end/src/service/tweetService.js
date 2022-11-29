@@ -1,4 +1,5 @@
 import { usuarios, tweets } from "../service/variables.js"
+import { Tweets, Usuarios } from "../service/variables.js";
 
 function postTweet(tweet,username) { 
     if (!username || !tweet) {
@@ -7,7 +8,7 @@ function postTweet(tweet,username) {
     
     const { avatar } = usuarios.find(user => user.username === username);
     
-    tweets.push({ username, tweet, avatar });
+    new Tweets( username, tweet, avatar );
 }
 
 function userTweets() { 
