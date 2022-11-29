@@ -1,5 +1,5 @@
 class AuthControlller { 
-    constructor(username,avatar) { 
+    constructor() { 
         this.usuarios = [];
         this.signup = this.signup.bind(this);
     }
@@ -15,6 +15,10 @@ class AuthControlller {
         usuarios.push({ username, avatar });
 
         return res.status(200).send('OK deu tudo certo');
+    }
+
+    getLoggedUser(username) { 
+        return this.usuarios.find(user => user.username === username)
     }
 }
 
