@@ -1,33 +1,42 @@
 import { tweetService } from "../service/tweetService.js";
 
-function postTweet(req,res) {
-    const { tweet, username } = req.body;
+class TweetController { 
+    constructor() { 
+        this.tweets = [];
+        this.postTweet = this.postTweet.bind(this)
+    }
 
-    const error = tweetService.postTweet(tweet,username);
-
-    if(error) return res.status(400).send('Todos os campos são obrigatórios!');
-  
-    res.status(201).send('OK, seu tweet foi criado');
+    postTweet(req,res) {
+        const { tweet, username } = req.body;
+    
+        if (!username || !tweet) {
+            return res.status(400).send('Todos os campos são obrigatórios!');
+        }
+         
+        const { avatar } = usuarios.find(user => user.username === username);
+         
+        this.tweets.push({ username, tweet, avatar });
+      
+        res.status(201).send('OK, seu tweet foi criado');
+    }
 }
 
-function userTweets(req,res) { 
-    const tweetsDoUsuario = tweetService.userTweets();
 
-    res.status(200).send(tweetsDoUsuario);
-}
 
-function allTweets(req,res) { 
-    const { page } = req.query;
+// function userTweets(req,res) { 
+//     const tweetsDoUsuario = tweetService.userTweets();
 
-    const tweets = tweetService.allTweets(page);
+//     res.status(200).send(tweetsDoUsuario);
+// }
 
-    if(tweets === 'error') return res.status(400).send('Informe uma página válida!');
+// function allTweets(req,res) { 
+//     const { page } = req.query;
 
-    res.status(200).send(tweets);
-}
+//     const tweets = tweetService.allTweets(page);
 
-export const tweetController = { 
-    postTweet, 
-    userTweets, 
-    allTweets
-}
+//     if(tweets === 'error') return res.status(400).send('Informe uma página válida!');
+
+//     res.status(200).send(tweets);
+// }
+
+export default new TweetController();

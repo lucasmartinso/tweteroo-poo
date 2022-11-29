@@ -1,45 +1,27 @@
-import { usuarios, tweets } from "../service/variables.js"
-import { Tweets, Usuarios } from "../service/variables.js";
+// function userTweets() { 
+//     const { username } = req.params;
 
-function postTweet(tweet,username) { 
-    if (!username || !tweet) {
-       return 'error';
-    }
+//     const tweetsDoUsuario = tweets.filter(t => t.username === username);
+
+//     return tweetsDoUsuario;
+// }
+
+// function reverseTweets() {
+//     return [...tweets].reverse();
+// }
+
+// function allTweets() { 
+//     if (page && page < 1) {
+//         res.status(400).send('Informe uma página válida!');
+//         return;
+//     }
+//     const limite = 10;
+//     const start = (page - 1) * limite;
+//     const end = page * limite;
+
+//     if (tweets.length <= 10) {
+//         return res.send(reverseTweets());
+//     }
     
-    const { avatar } = usuarios.find(user => user.username === username);
-    
-    new Tweets( username, tweet, avatar );
-}
-
-function userTweets() { 
-    const { username } = req.params;
-
-    const tweetsDoUsuario = tweets.filter(t => t.username === username);
-
-    return tweetsDoUsuario;
-}
-
-function reverseTweets() {
-    return [...tweets].reverse();
-}
-
-function allTweets(page) { 
-    if (page && page < 1) {
-        return 'error';
-    }
-    const limite = 10;
-    const start = (page - 1) * limite;
-    const end = page * limite;
-
-    if (tweets.length <= 10) {
-        return reverseTweets();
-    }
-    
-    return [...tweets].reverse().slice(start, end);
-}
-
-export const tweetService = { 
-    postTweet, 
-    userTweets, 
-    allTweets
-}
+//     return [...tweets].reverse().slice(start, end)
+// }

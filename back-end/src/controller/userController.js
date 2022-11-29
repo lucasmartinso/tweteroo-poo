@@ -12,7 +12,8 @@ class AuthControlller {
             return;
         }
     
-        usuarios.push({ username, avatar });
+        this.usuarios.push({ username, avatar });
+        console.log(this.usuarios);
 
         return res.status(200).send('OK deu tudo certo');
     }
