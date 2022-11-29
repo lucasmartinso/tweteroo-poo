@@ -34,8 +34,8 @@ class TweetController {
         const start = (page - 1) * limite;
         const end = page * limite;
     
-        if (tweets.length <= 10) {
-            return res.send(reverseTweets());
+        if (this.tweets.length <= 10) {
+            return res.send(this.reverseTweets());
         } 
 
         return res.status(200).send([...this.tweets].reverse().slice(start, end));
